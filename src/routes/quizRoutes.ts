@@ -5,11 +5,17 @@ const router = Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Quizzes
+ *   description: API endpoints for managing quizzes
+ */
+
+/**
+ * @swagger
  * /api/quizzes:
  *   post:
  *     summary: Create a new quiz
- *     tags:
- *       - Quizzes
+ *     tags: [Quizzes]
  *     requestBody:
  *       required: true
  *       content:
@@ -48,8 +54,7 @@ router.post('/quizzes', QuizController.createQuiz);
  * /api/quizzes:
  *   get:
  *     summary: Retrieve all quizzes
- *     tags:
- *       - Quizzes
+ *     tags: [Quizzes]
  *     responses:
  *       '200':
  *         description: Successful operation
@@ -63,8 +68,7 @@ router.get('/quizzes', QuizController.getQuizzes);
  * /api/quizzes/{id}:
  *   get:
  *     summary: Retrieve a quiz by ID
- *     tags:
- *       - Quizzes
+ *     tags: [Quizzes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -85,8 +89,7 @@ router.get('/quizzes/:id', QuizController.getQuizById);
  * /api/quizzes/{id}:
  *   put:
  *     summary: Update a quiz by ID
- *     tags:
- *       - Quizzes
+ *     tags: [Quizzes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -140,8 +143,7 @@ router.put('/quizzes/:id', QuizController.updateQuiz);
  * /api/quizzes/{id}:
  *   delete:
  *     summary: Delete a quiz by ID
- *     tags:
- *       - Quizzes
+ *     tags: [Quizzes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -156,5 +158,65 @@ router.put('/quizzes/:id', QuizController.updateQuiz);
  *         description: Quiz not found
  */
 router.delete('/quizzes/:id', QuizController.deleteQuiz);
+
+/**
+ * @swagger
+ * /api/quizzes/{userId}/{quizId}:
+ *   post:
+ *     summary: Take a quiz and get the score
+ *     tags: [Quizzes]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *       - in: path
+ *         name: quizId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               answers:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     answerId:
+ *                       type: integer
+ *                       format: int64
+ *                     isCorrect:
+ *                       type: boolean
+ *     responses:
+ *       '200':
+ *         description: Quiz taken successfully
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Internal Server Error
+ */
+router.post('/quizzes/:userId/:quizId', QuizController.takeQuiz);
+
+/**
+ * @swagger
+ * /api/leaderboard:
+ *   get:
+ *     summary: Get the leaderboard of quiz scores
+ *     tags: [Quizzes]
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *       '500':
+ *         description: Internal Server Error
+ */
+router.get('/leaderboard', QuizController.getLeaderboard);
 
 export default router;

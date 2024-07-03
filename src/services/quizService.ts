@@ -1,6 +1,7 @@
 import Quiz from '../models/quiz';
 import Question from '../models/question';
 import Answer from '../models/answer';
+import ScoreService from './scoreService';
 
 class QuizService {
   public async createQuiz(data: any): Promise<Quiz> {
@@ -74,7 +75,7 @@ class QuizService {
           });
         }
 
-        if (answers && question) { // Add null check for question here
+        if (answers && question) {
           for (const answerData of answers) {
             const { id: answerId, content, isCorrect } = answerData;
 
@@ -106,6 +107,23 @@ class QuizService {
 
     await quiz.destroy();
     return true;
+  }
+
+  public async takeQuiz(userId: number, quizId: number, answers: any[]): Promise<number> {
+    let score = 0;
+
+    // Calculate score based on correct answers
+    for (const answer of answers) {
+      const { answerId, isCorrect } = answer;
+      if (isCorrect) {
+        score++;
+      }
+    }
+
+    // Store the score in the database
+    await ScoreService.recordScore(userId, quizId, score);
+
+    return score;
   }
 }
 

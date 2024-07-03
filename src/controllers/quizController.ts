@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import QuizService from '../services/quizService';
+import ScoreService from '../services/scoreService';
 
 class QuizController {
   public async createQuiz(req: Request, res: Response): Promise<void> {
@@ -54,6 +55,28 @@ class QuizController {
       } else {
         res.status(404).json({ error: 'Quiz not found' });
       }
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+    }
+  }
+
+  public async takeQuiz(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, quizId } = req.params;
+      const answers = req.body.answers;
+
+      const score = await QuizService.takeQuiz(parseInt(userId, 10), parseInt(quizId, 10), answers);
+      
+      res.status(200).json({ score });
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+    }
+  }
+
+  public async getLeaderboard(req: Request, res: Response): Promise<void> {
+    try {
+      const leaderboard = await ScoreService.getLeaderboard();
+      res.status(200).json(leaderboard);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
