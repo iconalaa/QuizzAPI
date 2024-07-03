@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import path from 'path';
 
+
 const options: swaggerJsdoc.Options = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -11,12 +12,12 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Replace with your server URL
-        description: 'Development server',
+        url: 'http://localhost:3000',
+        description: 'Local server',
       },
     ],
   },
-  apis: [path.resolve(__dirname, '../routes/*.ts')], 
+  apis: [path.resolve(__dirname, '../routes/*.js')],
 };
 
 const specs = swaggerJsdoc(options);

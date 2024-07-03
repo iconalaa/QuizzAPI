@@ -1,11 +1,14 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../config/database';
-import Quiz from './quiz'; // Ensure Quiz model is imported
+import Quiz from './quiz';
 
 class Question extends Model {
   public id!: number;
   public content!: string;
   public quizId!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Question.init(
@@ -13,28 +16,29 @@ Question.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     content: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     quizId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Quiz,
-        key: 'id'
-      }
-    }
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    tableName: 'questions'
+    modelName: 'Question',
+    tableName: 'questions',
   }
 );
 
-
-Quiz.hasMany(Question, { foreignKey: 'quizId' });
 Question.belongsTo(Quiz, { foreignKey: 'quizId' });
+Quiz.hasMany(Question, { foreignKey: 'quizId' });
 
 export default Question;

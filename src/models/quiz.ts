@@ -4,6 +4,9 @@ import { sequelize } from '../config/database';
 class Quiz extends Model {
   public id!: number;
   public title!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Quiz.init(
@@ -11,16 +14,17 @@ Quiz.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    tableName: 'quizzes'
+    modelName: 'Quiz',
+    tableName: 'quizzes',
   }
 );
 

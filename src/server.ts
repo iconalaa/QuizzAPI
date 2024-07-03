@@ -1,11 +1,11 @@
-// src/server.ts
-
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import specs from './config/swaggerConfig'; 
 import router from './routes/quizRoutes'; 
 
 const app = express();
+
+app.use(express.json()); // Add this line to parse JSON requests
 
 // Serve Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

@@ -7,6 +7,9 @@ class Answer extends Model {
   public content!: string;
   public isCorrect!: boolean;
   public questionId!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Answer.init(
@@ -14,31 +17,33 @@ Answer.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     content: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     isCorrect: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
     questionId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: Question,
-        key: 'id'
-      }
-    }
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    tableName: 'answers'
+    modelName: 'Answer',
+    tableName: 'answers',
   }
 );
 
-Question.hasMany(Answer, { foreignKey: 'questionId' });
 Answer.belongsTo(Question, { foreignKey: 'questionId' });
+Question.hasMany(Answer, { foreignKey: 'questionId' });
 
 export default Answer;
