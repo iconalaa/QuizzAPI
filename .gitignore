@@ -1,0 +1,33 @@
+# Dependency directories
+node_modules/
+
+# TypeScript build directory
+dist/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Config files that may contain sensitive information
+config/config.json
+
+# macOS specific files
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# npm debug log
+npm-debug.log*
+
+# Yarn integrity file
+.yarn-integrity
+
+# Jest coverage
+coverage/
