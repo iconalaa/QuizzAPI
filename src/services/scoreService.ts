@@ -18,6 +18,20 @@ class ScoreService {
       totalScore: entry.dataValues.totalScore, // Access using the exact alias
     }));
   }
+
+  public async getQuizLeaderboard(quizId: number): Promise<any[]> {
+    const leaderboard = await Score.findAll({
+      where: { quizId },
+      attributes: ['userId', [sequelize.fn('sum', sequelize.col('score')), '"totalScore"']], // Quote the alias here
+      group: ['userId'],
+      order: [[sequelize.literal('"totalScore"'), 'DESC']], // Quote the alias here as well
+    });
+
+    return leaderboard.map((entry: any) => ({
+      userId: entry.userId,
+      totalScore: entry.dataValues.totalScore, // Access using the exact alias
+    }));
+  }
 }
 
 export default new ScoreService();

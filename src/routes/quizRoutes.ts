@@ -219,4 +219,25 @@ router.post('/quizzes/:userId/:quizId', QuizController.takeQuiz);
  */
 router.get('/leaderboard', QuizController.getLeaderboard);
 
+/**
+ * @swagger
+ * /api/leaderboard/{quizId}:
+ *   get:
+ *     summary: Get the leaderboard for a specific quiz
+ *     tags: [Quizzes]
+ *     parameters:
+ *       - in: path
+ *         name: quizId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *       '500':
+ *         description: Internal Server Error
+ */
+router.get('/leaderboard/:quizId', QuizController.getQuizLeaderboard);  // New route
+
 export default router;

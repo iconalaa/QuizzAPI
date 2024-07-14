@@ -81,6 +81,16 @@ class QuizController {
       res.status(500).json({ error: (error as Error).message });
     }
   }
+
+  public async getQuizLeaderboard(req: Request, res: Response): Promise<void> {
+    try {
+      const quizId = parseInt(req.params.quizId, 10);
+      const leaderboard = await ScoreService.getQuizLeaderboard(quizId);
+      res.status(200).json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+    }
+  }
 }
 
 export default new QuizController();
