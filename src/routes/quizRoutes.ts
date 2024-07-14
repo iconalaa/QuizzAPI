@@ -240,4 +240,25 @@ router.get('/leaderboard', QuizController.getLeaderboard);
  */
 router.get('/leaderboard/:quizId', QuizController.getQuizLeaderboard);  // New route
 
+/**
+ * @swagger
+ * /api/quizzes/{id}/qr:
+ *   get:
+ *     summary: Generate QR code for a quiz
+ *     tags: [Quizzes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: QR code generated successfully
+ *       '500':
+ *         description: Internal Server Error
+ */
+router.get('/quizzes/:id/qr', QuizController.generateQuizQR); // New route for generating QR code
+
 export default router;

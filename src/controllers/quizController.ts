@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import QuizService from '../services/quizService';
 import ScoreService from '../services/scoreService';
+import QRCode from 'qrcode';
 
 class QuizController {
   public async createQuiz(req: Request, res: Response): Promise<void> {
@@ -63,11 +64,8 @@ class QuizController {
   public async takeQuiz(req: Request, res: Response): Promise<void> {
     try {
       const { userId, quizId } = req.params;
-      const answers = req.body.answers;
-
-      const score = await QuizService.takeQuiz(parseInt(userId, 10), parseInt(quizId, 10), answers);
-      
-      res.status(200).json({ score });
+      const result = await QuizService.takeQuiz(parseInt(userId, 10), parseInt(quizId, 10), req.body.answers);
+      res.status(200).json(result);
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
@@ -87,6 +85,17 @@ class QuizController {
       const quizId = parseInt(req.params.quizId, 10);
       const leaderboard = await ScoreService.getQuizLeaderboard(quizId);
       res.status(200).json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
+    }
+  }
+
+  public async generateQuizQR(req: Request, res: Response): Promise<void> {
+    try {
+      const quizId = req.params.id;
+      const url = `${req.protocol}://${req.get('host')}/api/quizzes/${quizId}`;
+      const qrCode = await QRCode.toDataURL(url);
+      res.status(200).json({ qrCode });
     } catch (error) {
       res.status(500).json({ error: (error as Error).message });
     }
