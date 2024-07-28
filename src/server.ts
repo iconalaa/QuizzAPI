@@ -2,6 +2,7 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import specs from './config/swaggerConfig'; 
 import router from './routes/quizRoutes'; 
+import 'dotenv/config';
 
 const app = express();
 

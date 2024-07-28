@@ -1,15 +1,25 @@
 import { Sequelize } from 'sequelize';
-import config from './config.json';
+import 'dotenv/config'; // Load environment variables
 
-const env = process.env.NODE_ENV || 'development';
-const dbConfig = (config as any)[env];
+const {
+  POSTGRES_URL,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DATABASE,
+  POSTGRES_HOST
+} = process.env;
+
+if (!POSTGRES_URL || !POSTGRES_USER || !POSTGRES_PASSWORD || !POSTGRES_DATABASE || !POSTGRES_HOST) {
+  throw new Error('Database environment variables are not defined');
+}
 
 export const sequelize = new Sequelize(
-  dbConfig.database,
-  dbConfig.username,
-  dbConfig.password,
+  POSTGRES_DATABASE as string,
+  POSTGRES_USER as string,
+  POSTGRES_PASSWORD as string,
   {
-    host: dbConfig.host,
+    host: POSTGRES_HOST,
     dialect: 'postgres',
+    // Additional options can be added here
   }
 );
