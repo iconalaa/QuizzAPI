@@ -12,6 +12,7 @@ class QuizController {
       res.status(500).json({ error: (error as Error).message });
     }
   }
+  
 
   public async getQuizzes(req: Request, res: Response): Promise<void> {
     try {
