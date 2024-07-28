@@ -238,7 +238,7 @@ router.get('/leaderboard', QuizController.getLeaderboard);
  *       '500':
  *         description: Internal Server Error
  */
-router.get('/leaderboard/:quizId', QuizController.getQuizLeaderboard);  // New route
+router.get('/leaderboard/:quizId', QuizController.getQuizLeaderboard);  
 
 /**
  * @swagger
@@ -259,6 +259,6 @@ router.get('/leaderboard/:quizId', QuizController.getQuizLeaderboard);  // New r
  *       '500':
  *         description: Internal Server Error
  */
-router.get('/quizzes/:id/qr', QuizController.generateQuizQR); // New route for generating QR code
+router.get('/quizzes/:id/qr', QuizController.generateQuizQR); 
 
 export default router;
