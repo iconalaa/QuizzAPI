@@ -22,6 +22,8 @@ class QuizController {
     }
   }
 
+  
+
   public async getQuizById(req: Request, res: Response): Promise<void> {
     try {
       const quiz = await QuizService.getQuizById(parseInt(req.params.id, 10));
