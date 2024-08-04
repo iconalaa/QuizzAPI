@@ -1,8 +1,8 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('questions', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Questions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,18 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       content: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       quizId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'quizzes',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -33,7 +25,7 @@ module.exports = {
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('questions');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Questions');
   }
 };
