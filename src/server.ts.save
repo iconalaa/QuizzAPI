@@ -14,8 +14,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api', router);
 
 // Define your port and host
-const PORT = 4000;
-const HOST = '10.10.20.49'; // Use the internal IP address
+const PORT = 3000;
+const HOST = 'node dist/server.js'; // Use '0.0.0.0' to listen on all available interfaces
 
 // Start the server
 app.listen(PORT, HOST, () => {

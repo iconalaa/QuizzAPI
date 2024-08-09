@@ -11,14 +11,15 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: 'http://41.62.44.186:3000', // Update this to your server's public IP and port
+        url: 'http://10.10.20.49:4000', // Update the URL to match your server's address and port
         description: 'Production server',
       },
     ],
   },
-  apis: [path.resolve(__dirname, '../routes/*.js')], // Ensure this path points to the compiled JavaScript files
+  apis: [path.resolve(__dirname, '../routes/*.js')],
 };
 
 const specs = swaggerJsdoc(options);
 
 export default specs;
+
